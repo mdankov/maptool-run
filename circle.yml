@@ -1,0 +1,13 @@
+machine:
+  environment:
+dependencies:
+  cache_directories:
+    - ~/mapdir
+  pre:
+    - "[ -d ~/mapdir ] || mkdir ~/mapdir"
+    - sudo apt-get update
+    - sudo apt-get install cmake
+    - ./build-map
+test:
+  post:
+    - /bin/ture
