@@ -7,7 +7,7 @@ dependencies:
     - "[ -d ~/mapdir ] || mkdir ~/mapdir"
     - sudo apt-get update
     - sudo apt-get install cmake
-    - ./build-map
+    - bash build-map
 test:
   post:
     - /bin/ture
