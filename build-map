@@ -1,0 +1,32 @@
+#!/bin/bash
+export MAPDIR=~/mapdir
+mkdir $MAPDIR/bin
+
+[ -f $MAPDIR/planet-latest.osm.pbf ] || 
+  wget ftp://ftp.spline.de/pub/openstreetmap/pbf/planet-latest.osm.pbf --output-document=$MAPDIR/planet-latest.osm.pbf || 
+    exit 1
+
+[ -f $MAPDIR/navit/navit/maptool/maptool ] ||
+   git clone https://github.com/mdankov/navit.git ~/navitsrc &&
+   cd $MAPDIR/navitsrc &&
+   git checkout maptool-savestate &&
+   cd $MAPDIR/bin &&
+   cmake ~/navitsrc &&
+   make || 
+    exit 1
+
+cd $MAPDIR
+
+if [ -f saved_state_.tmp] ; then
+  export OPTS=-C -I
+else
+  export OPTS=-I
+fi
+
+bin/navit/maptool/maptool $OPTS -k -6 --protobuf -S 2048 -i planet-latest.osm.pbf -o planet.bin
+
+if [ $? -eq 0 -o $? -eq 100 ] ; then
+  exit 0
+else
+  exit $?
+fi
