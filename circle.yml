@@ -232,5 +232,6 @@ test:
     - /bin/ture
 deployment:
   planet:
+    branch: master
     commands:
-      - cp ~mapdir/planet.bin $CIRCLE_ARTIFACTS/
+      - cp ~/mapdir/planet.bin $CIRCLE_ARTIFACTS/
