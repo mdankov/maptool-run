@@ -12,7 +12,7 @@ export MAPDIR=~/mapdir
 [ -f $MAPDIR/navit/navit/maptool/maptool ] ||
    git clone https://github.com/mdankov/navit.git ~/navitsrc &&
    cd ~/navitsrc &&
-   git checkout maptool-savestate &&
+   git checkout maptool-save-state &&
    cd $MAPDIR/bin &&
    cmake ~/navitsrc &&
    make || 
