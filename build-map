@@ -2,8 +2,8 @@
 export MAPDIR=~/mapdir
 mkdir $MAPDIR/bin
 
-# [ -f $MAPDIR/planet-latest.osm.pbf ] || 
-  wget -c ftp://ftp.spline.de/pub/openstreetmap/pbf/planet-latest.osm.pbf --output-document=$MAPDIR/planet-latest.osm.pbf || 
+[ -f $MAPDIR/planet-latest.osm.pbf ] || 
+  wget http://download.bbbike.org/osm/planet/planet-latest.osm.pbf || 
     exit 1
 
 [ -f $MAPDIR/navit/navit/maptool/maptool ] ||
