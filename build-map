@@ -1,9 +1,12 @@
 #!/bin/bash
 export MAPDIR=~/mapdir
-mkdir $MAPDIR/bin
+
+[-f $MAPDIR/done.txt ] && exit 0
+
+[ -d mkdir $MAPDIR/bin ] || mkdir $MAPDIR/bin
 
 [ -f $MAPDIR/planet-latest.osm.pbf ] || 
-  wget http://download.bbbike.org/osm/planet/planet-latest.osm.pbf || 
+  wget http://download.geofabrik.de/europe-latest.osm.pbf -O planet-latest.osm.pbf || 
     exit 1
 
 [ -f $MAPDIR/navit/navit/maptool/maptool ] ||
@@ -24,9 +27,14 @@ else
 fi
 
 bin/navit/maptool/maptool $OPTS -k -6 --protobuf -S 2048 -i planet-latest.osm.pbf -o planet.bin
+export MAPTOOLRC=$?
 
-if [ $? -eq 0 -o $? -eq 100 ] ; then
+if [  $MAPTOOLRC -eq 100 ] ; then
+  exit 0
+fi
+if [ $MAPTOOLRC -eq 0 ] ; then
+  touch $MAPDIR/done.txt
   exit 0
 else
-  exit $?
+  exit $MAPTOOLRC
 fi
