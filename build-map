@@ -1,9 +1,9 @@
 #!/bin/bash
 export MAPDIR=~/mapdir
 
-[-f $MAPDIR/done.txt ] && exit 0
+[ -f $MAPDIR/done.txt ] && exit 0
 
-[ -d mkdir $MAPDIR/bin ] || mkdir $MAPDIR/bin
+[ -d $MAPDIR/bin ] || mkdir $MAPDIR/bin
 
 [ -f $MAPDIR/planet-latest.osm.pbf ] || 
   wget http://download.geofabrik.de/europe-latest.osm.pbf -O planet-latest.osm.pbf || 
