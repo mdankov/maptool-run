@@ -26,7 +26,7 @@ else
   export OPTS=-I
 fi
 
-bin/navit/maptool/maptool $OPTS -k -6 --protobuf -S 2048 -i planet-latest.osm.pbf -o planet.bin
+bin/navit/maptool/maptool $OPTS -k -6 --protobuf -S 2147483648 -i planet-latest.osm.pbf planet.bin
 export MAPTOOLRC=$?
 
 if [  $MAPTOOLRC -eq 100 ] ; then
