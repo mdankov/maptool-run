@@ -9,18 +9,20 @@ export MAPDIR=~/mapdir
   wget http://download.geofabrik.de/europe-latest.osm.pbf -O $MAPDIR/planet-latest.osm.pbf || 
     exit 1
 
-[ -f $MAPDIR/navit/navit/maptool/maptool ] ||
-   git clone https://github.com/mdankov/navit.git ~/navitsrc &&
-   cd ~/navitsrc &&
-   git checkout maptool-save-state &&
-   cd $MAPDIR/bin &&
-   cmake ~/navitsrc &&
-   make || 
+if [ ! -f $MAPDIR/navit/navit/maptool/maptool ] ; then
+  git clone https://github.com/mdankov/navit.git ~/navitsrc &&
+  cd ~/navitsrc &&
+  git checkout maptool-save-state &&
+  cd $MAPDIR/bin &&
+  cmake ~/navitsrc &&
+  make || 
     exit 1
+  rm $MAPDIR/*.tmp
+fi
 
 cd $MAPDIR
 
-if [ -f saved_state_.tmp] ; then
+if [ -f saved_state_.tmp ] ; then
   export OPTS=-C -I
 else
   export OPTS=-I
