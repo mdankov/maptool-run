@@ -29,7 +29,7 @@ fi
 cd $MAPDIR
 
 if [ -f saved_state_.tmp ] ; then
-  export OPTS=-C -I
+  export OPTS="-C -I"
 else
   export OPTS=-I
 fi
