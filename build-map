@@ -5,11 +5,16 @@ export MAPDIR=~/mapdir
 
 [ -d $MAPDIR/bin ] || mkdir $MAPDIR/bin
 
-[ -f $MAPDIR/planet-latest.osm.pbf ] || 
+if [ ! -f $MAPDIR/planet-latest.osm.pbf ] ; then 
+  # Clean up tmp files because we're going to have a newer map
+  rm $MAPDIR/*.tmp
+  # Force fetching the source and compiling a fresh maptool 
+  rm -rf $mapdir/bin/*
   wget http://download.geofabrik.de/europe-latest.osm.pbf -O $MAPDIR/planet-latest.osm.pbf || 
     exit 1
+fi
 
-if [ ! -f $MAPDIR/navit/navit/maptool/maptool ] ; then
+if [ ! -f $MAPDIR/bin/navit/maptool/maptool ] ; then
   git clone https://github.com/mdankov/navit.git ~/navitsrc &&
   cd ~/navitsrc &&
   git checkout maptool-save-state &&
@@ -17,6 +22,7 @@ if [ ! -f $MAPDIR/navit/navit/maptool/maptool ] ; then
   cmake ~/navitsrc &&
   make || 
     exit 1
+  # tmp files make no sense after maptool rocompilation
   rm $MAPDIR/*.tmp
 fi
 
