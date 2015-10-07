@@ -229,7 +229,7 @@ dependencies:
     - bash build-map
 test:
   post:
-    - /bin/ture
+    - /bin/true
 deployment:
   planet:
     branch: master
